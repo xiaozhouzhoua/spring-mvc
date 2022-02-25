@@ -2,6 +2,7 @@ package com.spring.springmvc.model;
 
 import lombok.Data;
 import javax.validation.constraints.*;
+import java.util.Date;
 
 @Data
 public class User {
@@ -18,5 +19,5 @@ public class User {
 
     @NotNull
     @Past
-    private Data birthday;
+    private Date birthday;
 }
