@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SubscriptionServiceImpl implements  SubscriptionService{
+public class SubscriptionServiceImpl implements SubscriptionService{
     @Autowired
     private StockDao stockDao;
 

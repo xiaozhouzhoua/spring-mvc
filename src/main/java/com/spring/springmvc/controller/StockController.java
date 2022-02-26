@@ -2,7 +2,7 @@ package com.spring.springmvc.controller;
 
 import com.spring.springmvc.model.Stock;
 import com.spring.springmvc.model.StockSymbol;
-import com.spring.springmvc.service.StockServiceImpl;
+import com.spring.springmvc.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/stocks")
 public class StockController {
     @Autowired
-    private StockServiceImpl stockService;
+    private StockService stockService;
 
     @GetMapping
     private String getStocks(Model model) {
