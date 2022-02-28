@@ -1,4 +1,4 @@
-package com.spring.springmvc.security;
+package com.spring.springmvc.security.auth.provider;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,7 +18,7 @@ public class SudoAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
-        if (name.equals("sudo") && password.equals("root")) {
+        if (name.equalsIgnoreCase("sudo") && password.equalsIgnoreCase("root")) {
             Set<SimpleGrantedAuthority> authorities = new HashSet<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_SUDO"));
             return new UsernamePasswordAuthenticationToken(name, password, authorities);

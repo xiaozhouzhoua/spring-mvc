@@ -1,5 +1,10 @@
 package com.spring.springmvc.security;
 
+import com.spring.springmvc.security.auth.filter.CustomAuthenticationFilter;
+import com.spring.springmvc.security.auth.handler.CustomFailureHandler;
+import com.spring.springmvc.security.auth.handler.CustomSuccessHandler;
+import com.spring.springmvc.security.auth.provider.CustomAdminAuthenticationProvider;
+import com.spring.springmvc.security.auth.provider.SudoAuthenticationProvider;
 import com.spring.springmvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -36,8 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider())
-                .authenticationProvider(new SudoAuthenticationProvider());
+        auth.authenticationProvider(new CustomAdminAuthenticationProvider());
+//        auth.authenticationProvider(authenticationProvider())
+//                .authenticationProvider(new SudoAuthenticationProvider());
     }
 
     @Override
@@ -49,8 +56,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/")
-                .failureForwardUrl("/login?error=true")
+                .successHandler(new CustomSuccessHandler())
+                .failureUrl("/login?error=true")
+                .failureHandler(new CustomFailureHandler())
                 .and()
+                .addFilterBefore(new CustomAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout().invalidateHttpSession(true).clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
