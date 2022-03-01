@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
@@ -72,5 +73,15 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     public Future<Void> addSubscriptionAsync(String email, String symbol) {
         addSubscription(email, symbol);
         return new AsyncResult<>(null);
+    }
+
+    @Override
+    public CompletableFuture<Void> addSubscriptionByCf(String email, String symbol) {
+        return CompletableFuture.runAsync(() -> addSubscription(email, symbol));
+    }
+
+    @Override
+    public CompletableFuture<List<StockSubscription>> findByEmailByCf(String email) {
+        return CompletableFuture.supplyAsync(() -> findByEmail(email));
     }
 }

@@ -3,6 +3,7 @@ package com.spring.springmvc.service;
 import com.spring.springmvc.model.StockSubscription;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 public interface SubscriptionService {
@@ -13,4 +14,8 @@ public interface SubscriptionService {
     Future<List<StockSubscription>> findByEmailAsync(String email);
 
     Future<Void> addSubscriptionAsync(String email, String symbol);
+
+    CompletableFuture<List<StockSubscription>> findByEmailByCf(String email);
+
+    CompletableFuture<Void> addSubscriptionByCf(String email, String symbol);
 }

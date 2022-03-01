@@ -16,6 +16,7 @@ import org.springframework.web.context.request.async.WebAsyncTask;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 
@@ -97,5 +98,17 @@ public class SubscriptionControllerAsync {
             return "subscription";
         };
         return new WebAsyncTask<>(callable);
+    }
+
+    @GetMapping("subscriptionByCf")
+    public CompletableFuture<String> subscriptionByCf(Model model) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        CompletableFuture<String> getSubscriptionModelFuture = subscriptionService.findByEmailByCf(name)
+                .thenApplyAsync((subscriptions) -> {
+                    model.addAttribute("email", name);
+                    model.addAttribute("subscriptions", subscriptions);
+                    return "subscription";
+                });
+        return getSubscriptionModelFuture;
     }
 }
