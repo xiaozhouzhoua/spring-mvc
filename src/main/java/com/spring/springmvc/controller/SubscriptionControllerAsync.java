@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.context.request.async.WebAsyncTask;
+import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
@@ -110,5 +112,19 @@ public class SubscriptionControllerAsync {
                     return "subscription";
                 });
         return getSubscriptionModelFuture;
+    }
+
+    @GetMapping("subscriptionByReactor")
+    public Mono<String> subscriptionByReactor(Model model) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        final Mono<String> mono = subscriptionService.findByEmailReactor(name).reduceWith(ArrayList::new, (result, item) -> {
+            result.add(item);
+            return result;
+        }).map((subscriptions) -> {
+            model.addAttribute("email", name);
+            model.addAttribute("subscriptions", subscriptions);
+            return "subscription";
+        });
+        return mono;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Optional;
@@ -83,5 +84,10 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     @Override
     public CompletableFuture<List<StockSubscription>> findByEmailByCf(String email) {
         return CompletableFuture.supplyAsync(() -> findByEmail(email));
+    }
+
+    @Override
+    public Flux<StockSubscription> findByEmailReactor(String email) {
+        return Flux.fromIterable(findByEmail(email));
     }
 }
