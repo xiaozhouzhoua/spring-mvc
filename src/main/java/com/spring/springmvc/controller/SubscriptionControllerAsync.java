@@ -22,7 +22,7 @@ import java.util.concurrent.ForkJoinPool;
 import static com.spring.springmvc.Constants.TEST_USER_EMAIL;
 
 @Controller
-@RequestMapping("/subscriptionsAsync")
+@RequestMapping("/subscriptions/async")
 public class SubscriptionControllerAsync {
     @Autowired
     private SubscriptionService subscriptionService;
@@ -49,7 +49,7 @@ public class SubscriptionControllerAsync {
      * 使用DeferredResult来尽快返回，不会因为get阻塞
      * 后台线程去执行
      */
-    @GetMapping
+    @GetMapping("subscriptionToDef")
     public DeferredResult<String> subscriptionToDef(Model model) {
         DeferredResult<String> result = new DeferredResult<>();
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -71,7 +71,7 @@ public class SubscriptionControllerAsync {
      * 使用Callable返回，不会因为get阻塞
      * 后台线程去执行
      */
-    @GetMapping
+    @GetMapping("subscriptionToCall")
     public Callable<String> subscriptionToCall(Model model) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Callable<String> callable = () -> {
@@ -87,7 +87,7 @@ public class SubscriptionControllerAsync {
      * 使用Callable返回，不会因为get阻塞
      * 后台线程去执行
      */
-    @GetMapping
+    @GetMapping("subscriptionToWeb")
     public WebAsyncTask<String> subscriptionToWeb(Model model) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Callable<String> callable = () -> {

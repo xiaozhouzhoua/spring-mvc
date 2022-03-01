@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.concurrent.DelegatingSecurityContextExecutor;
+
 import java.util.concurrent.Executor;
 
 /**
@@ -21,7 +23,8 @@ public class AsyncConfig extends AsyncConfigurerSupport {
         executor.setQueueCapacity(100);
         executor.setThreadNamePrefix("AsyncMvc线程-");
         executor.initialize();
-        return executor;
+        // 包裹一层DelegatingSecurityContextExecutor让异步线程也可以拿到安全上下文
+        return new DelegatingSecurityContextExecutor(executor);
     }
 
     @Override
