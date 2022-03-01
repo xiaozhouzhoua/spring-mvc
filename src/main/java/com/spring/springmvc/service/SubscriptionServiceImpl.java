@@ -6,11 +6,14 @@ import com.spring.springmvc.entity.StockDO;
 import com.spring.springmvc.entity.StockSubscriptionDO;
 import com.spring.springmvc.model.StockSubscription;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,5 +59,18 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         if (!matched.isPresent()) {
             throw new RuntimeException("stock symbol not valid");
         }
+    }
+
+    @Async
+    @Override
+    public Future<List<StockSubscription>> findByEmailAsync(String email) {
+        return new AsyncResult<>(findByEmail(email));
+    }
+
+    @Async
+    @Override
+    public Future<Void> addSubscriptionAsync(String email, String symbol) {
+        addSubscription(email, symbol);
+        return new AsyncResult<>(null);
     }
 }
