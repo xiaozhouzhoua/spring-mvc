@@ -1,4 +1,4 @@
-package com.spring.springmvc.currying;
+package com.spring.springmvc.lambda.currying;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

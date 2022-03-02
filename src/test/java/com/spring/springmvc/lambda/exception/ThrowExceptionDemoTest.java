@@ -1,4 +1,4 @@
-package com.spring.springmvc.exception;
+package com.spring.springmvc.lambda.exception;
 
 import lombok.SneakyThrows;
 import org.assertj.core.util.Lists;

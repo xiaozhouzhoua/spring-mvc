@@ -1,4 +1,4 @@
-package function;
+package com.spring.springmvc.lambda.function;
 
 import lombok.Builder;
 import lombok.Data;

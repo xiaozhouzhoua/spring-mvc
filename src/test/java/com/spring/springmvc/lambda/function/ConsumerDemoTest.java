@@ -1,4 +1,4 @@
-package function;
+package com.spring.springmvc.lambda.function;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
