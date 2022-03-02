@@ -11,14 +11,14 @@ import java.util.function.Consumer;
 @Slf4j
 public class ConsumerDemoTest {
     @Test
-    public void LogConsumer() {
+    public void logConsumer() {
         Consumer<Object> logConsumer = logs -> log.info(logs.toString());
         logConsumer.accept("打印日志喽🤗");
         logConsumer.accept(System.currentTimeMillis());
     }
 
     @Test
-    public void AndThen() {
+    public void andThen() {
         // 注意Consumer内部可以改变元素的值!!!
         Consumer<List<String>> upperCaseConsumer = strList -> {
             for (int i = 0; i < strList.size(); i++) {

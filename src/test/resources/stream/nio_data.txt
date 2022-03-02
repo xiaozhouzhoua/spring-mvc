@@ -1,0 +1,11 @@
+public void filesLines() {
+        Path path = new File(getClass().getResource("/stream/nio_data.txt").getFile()).toPath();
+
+        try (Stream<String> contentStream = Files.lines(path, Charset.defaultCharset())) {
+            List<String> uppercaseContents = contentStream.map(String::toUpperCase)
+                    .collect(Collectors.toList());
+            uppercaseContents.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }

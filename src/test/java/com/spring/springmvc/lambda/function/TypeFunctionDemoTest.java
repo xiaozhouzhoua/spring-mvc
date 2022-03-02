@@ -9,7 +9,7 @@ import java.util.function.IntFunction;
 @Slf4j
 public class TypeFunctionDemoTest {
     @Test
-    public void IntFunctionDemo() {
+    public void intFunctionDemo() {
         // 避免频繁地拆箱-装箱
         IntFunction intFunction = x -> x + 1;
 

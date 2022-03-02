@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 @Slf4j
 public class SupplierDemoTest {
     @Test
-    public void RandomSupplier() {
+    public void randomSupplier() {
         Supplier<Double> doubleSupplier = Math::random;
 
         Consumer<Double> logConsumer = num -> log.info(String.valueOf(num));

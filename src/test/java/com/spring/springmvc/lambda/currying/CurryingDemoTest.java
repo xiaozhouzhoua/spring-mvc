@@ -11,7 +11,7 @@ import java.util.function.Function;
 @Slf4j
 public class CurryingDemoTest {
     @Test
-    public void CurryingCreation() {
+    public void curryingCreation() {
         // 定义的BiFunction，两个入参
         BiFunction<String, String, User> userBiFunction = (name, phone) -> new User(name, phone);
 

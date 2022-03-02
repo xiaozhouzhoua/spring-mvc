@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class ThrowExceptionDemoTest {
     @Test
-    public void ForLoopThrowTest() throws GeneralSecurityException, InterruptedException {
+    public void forLoopThrowTest() throws GeneralSecurityException, InterruptedException {
         List<String> items = Lists.newArrayList("foo", "bar", "baz");
         for (String item : items) {
             encrypt(item);
@@ -19,7 +19,7 @@ public class ThrowExceptionDemoTest {
     }
 
     @Test
-    public void CannotThrowException() {
+    public void cannotThrowException() {
         List<String> items = Lists.newArrayList("foo", "bar", "baz");
         // 匿名内部类接收的Consumer并没有对外抛出异常，需要我们在accept方法内部处理
         items.forEach(new Consumer<String>() {
@@ -35,7 +35,7 @@ public class ThrowExceptionDemoTest {
     }
 
     @Test
-    public void AnnotationException() {
+    public void annotationException() {
         List<String> items = Lists.newArrayList("foo", "bar", "baz");
         // 利用Lombok注解声明，无需try catch
         items.forEach(new Consumer<String>() {

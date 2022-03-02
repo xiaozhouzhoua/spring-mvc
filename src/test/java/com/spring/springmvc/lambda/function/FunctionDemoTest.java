@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FunctionDemoTest {
     @Test
-    public void ArithmeticFunction() {
+    public void arithmeticFunction() {
         Function<Integer, Integer> doubled = x -> x*2;
         log.info(String.valueOf(doubled.apply(6)));
 
@@ -26,13 +26,13 @@ public class FunctionDemoTest {
     }
 
     @Test
-    public void LengthFunction() {
+    public void lengthFunction() {
         Function<String, Integer> lengthFunction = String::length;
         log.info(String.valueOf(lengthFunction.apply("Good")));
     }
 
     @Test
-    public void CompositeFunction() {
+    public void compositeFunction() {
         Function<Integer, Integer> doubled = x -> x*2;
         Function<Integer, Integer> added = x -> x+2;
 
@@ -42,7 +42,7 @@ public class FunctionDemoTest {
     }
 
     @Test
-    public void IdentityFunction() {
+    public void identityFunction() {
         List<User> users = Lists.newArrayList(
                 User.builder().name("U1").phone("1888888").address("UA").build(),
                 User.builder().name("U2").phone("1999999").address("UM").build(),

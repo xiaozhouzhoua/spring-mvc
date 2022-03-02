@@ -8,14 +8,14 @@ import java.util.function.Predicate;
 @Slf4j
 public class PredicateDemoTest {
     @Test
-    public void SimplePredicate() {
+    public void simplePredicate() {
         Predicate<Integer> isAdult = age -> age >= 18;
         log.info(String.valueOf(isAdult.test(20)));
         log.info(String.valueOf(isAdult.test(16)));
     }
 
     @Test
-    public void AndPredicate() {
+    public void andPredicate() {
         Predicate<Integer> isAdult = age -> {
             log.info("isAdult enter...");
             return age >= 18;
@@ -32,7 +32,7 @@ public class PredicateDemoTest {
     }
 
     @Test
-    public void OrPredicate() {
+    public void orPredicate() {
         Predicate<Integer> cannotRead = age -> {
             log.info("cannotRead enter...");
             return age < 4;
@@ -50,7 +50,7 @@ public class PredicateDemoTest {
      * 取反
      */
     @Test
-    public void NegatePredicate() {
+    public void negatePredicate() {
         Predicate<Integer> isAdult = age -> age > 18;
         log.info(String.valueOf(isAdult.negate().test(16)));
     }
