@@ -1,10 +1,13 @@
 package com.spring.springmvc.lambda.stream;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -50,5 +53,15 @@ public class StreamNIODemoTest {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 很有用的工具方法
+     */
+    @Test
+    public void otherFileTools() throws IOException {
+        ClassPathResource resource = new ClassPathResource("/stream/nio_data.txt");
+        String dataString = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+        System.out.println(dataString);
     }
 }
