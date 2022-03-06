@@ -2,18 +2,25 @@ package com.spring.springmvc.reactive;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * defer方法创建数据源属于懒汉型，just创建数据源则是恶汉型
+ */
 @Slf4j
 public class DeferMethodDemoTest {
     /**
      * 调用Mono.just(new Date())将立即调用该new Date()方法并捕获结果
-     * 所述结果仅在被订阅后才发出Mono。多次订阅也不会更改该值
+     * 所述结果仅在订阅即发出Mono。多次订阅也不会更改该值
      */
     @Test
     public void noDeferFlux() throws InterruptedException {
@@ -87,6 +94,9 @@ public class DeferMethodDemoTest {
         return Mono.just(str);
     }
 
+    /**
+     * 值的变更对应的subscribe区别
+     */
     int a = 1;
     @Test
     public void intDeferAndJust() {
@@ -99,5 +109,48 @@ public class DeferMethodDemoTest {
         a = 2;
         monoJust.subscribe(System.out::println);
         monoDefer.subscribe(System.out::println);
+    }
+
+    /**
+     * 希望在真正subscribe的时候才调用generateIterable方法
+     * 不会去阻塞主线程的处理任务，真正在给定的Scheduler线程池中执行
+     */
+    @Test
+    public void threadLazy() throws InterruptedException {
+        log.info("time to get before flux");
+        Flux<String> flux = Flux.defer(() -> Flux.fromIterable(generateIterable()))
+                .subscribeOn(Schedulers.newParallel("new-parallel"));
+        log.info("time to get after flux");
+        flux.subscribe(System.out::println);
+        TimeUnit.SECONDS.sleep(10);
+    }
+
+    /**
+     * fromIterable在主线程上就已经调用了generateIterable方法生成了数据
+     * 无法起到在给定的Scheduler线程池中执行任务的要求
+     */
+    @Test
+    public void threadEager() throws InterruptedException {
+        log.info("time to get before flux");
+        Flux<String> flux = Flux.fromIterable(generateIterable())
+                .subscribeOn(Schedulers.newParallel("new-parallel"));
+        log.info("time to get after flux");
+        flux.subscribe(System.out::println);
+        TimeUnit.SECONDS.sleep(10);
+    }
+
+    private static List<String> generateIterable() {
+        log.info("start generateIterable");
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        List<String> result = new ArrayList<>();
+        result.add("one");
+        result.add("two");
+        result.add("three");
+        log.info("end generateIterable");
+        return result;
     }
 }
