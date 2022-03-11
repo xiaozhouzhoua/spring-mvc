@@ -14,3 +14,12 @@ Content-Type: application/json
   "age": 16,
   "birthday": "2002-01-01"
 }
+
+###
+POST http://localhost:8080/api/price
+
+#{
+#  "Stock(symbol=AMZN, name=null)": "USD3298.75",
+#  "Stock(symbol=TSLA, name=null)": "USD701.98",
+#  "Stock(symbol=APPL, name=null)": "USD101.00"
+#}

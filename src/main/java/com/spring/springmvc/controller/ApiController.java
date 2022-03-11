@@ -30,11 +30,11 @@ public class ApiController {
     }
 
     @PostMapping("/price")
-    public Map<Stock, String> getPrice() {
-        Map<Stock, String> result = new HashMap<>();
-        result.put(Stock.builder().symbol("APPL").build(), "USD101.00");
-        result.put(Stock.builder().symbol("AMZN").build(), "USD3298.75");
-        result.put(Stock.builder().symbol("TSLA").build(), "USD701.98");
+    public Map<String, String> getPrice() {
+        Map<String, String> result = new HashMap<>();
+        result.put("APPL", "USD101.00");
+        result.put("AMZN", "USD3298.75");
+        result.put("TSLA", "USD701.98");
         return result;
     }
 }
